@@ -88,6 +88,11 @@ class OpenApi
 		if (isset($data['components'])) {
 			$openApi->setComponents(Components::fromArray($data['components']));
 		}
+		if (isset($data['security'])) {
+			foreach ($data['security'] as $security) {
+				$openApi->addSecurityRequirement(SecurityRequirement::fromArray($security));
+			}
+		}
 		if (isset($data['tags'])) {
 			foreach ($data['tags'] as $tagData) {
 				$openApi->addTag(Tag::fromArray($tagData));
@@ -112,6 +117,11 @@ class OpenApi
 	public function setComponents(?Components $components): void
 	{
 		$this->components = $components;
+	}
+	
+	public function addSecurityRequirement(SecurityRequirement $security): void
+	{
+		$this->security[] = $security;
 	}
 
 	public function setExternalDocs(?ExternalDocumentation $externalDocs): void
